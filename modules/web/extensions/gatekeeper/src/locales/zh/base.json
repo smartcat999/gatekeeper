@@ -1,0 +1,8 @@
+{
+  "name": "名称",
+  "CONSTRAINT_TEMPLATES_DESC": "ConstraintTemplates 定义了一种方法来验证 Gatekeeper 的 Kubernetes准入控制器中的某些 Kubernetes 对象集。",
+  "CONSTRAINT_TEMPLATE": "约束模板",
+  "CONSTRAINT_TEMPLATE_TARGETS": "Targets",
+  "CONSTRAINT_TEMPLATE_STATUS": "Status",
+  "CONSTRAINT_DESC":"约束条件被管理员用于声明需要强制执行的 Gatekeeper 约束模板。"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Name",
+  "CONSTRAINT_TEMPLATES_DESC": "ConstraintTemplates define a way to validate some set of Kubernetes objects in Gatekeeper's Kubernetes admission controller.",
+  "CONSTRAINT_TEMPLATE": "Constraint Template",
+  "CONSTRAINT_TEMPLATE_TARGETS": "Targets",
+  "CONSTRAINT_TEMPLATE_STATUS": "Status",
+  "CONSTRAINT_DESC":"Constraints are used to inform Gatekeeper that the admin wants a ConstraintTemplate to be enforced."
+}

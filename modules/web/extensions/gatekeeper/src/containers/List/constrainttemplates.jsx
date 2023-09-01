@@ -1,0 +1,135 @@
+import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import {
+  Banner,
+  Field,
+} from '@kubed/components';
+import { Group, Pen, Trash } from '@kubed/icons';
+import { DataTable,useCommonActions, useActionMenu,getOriginData } from '@ks-console/shared';
+import store from '../../store';
+
+
+const ConstraintTemplateList = () => {
+  const { cluster } = useParams();
+  const params = useParams();
+  const templateRef = useRef();
+  const requestTemplatePrefix = '/apis/templates.gatekeeper.sh/v1';
+  const formatFn = (data) => {
+    return {
+      name: data.metadata.name, 
+      _originData: getOriginData(data),
+      ...data
+    }
+  }
+  function formatServerData(serverData) {
+    return {
+      ...serverData,
+      items: serverData.items,
+      totalItems: serverData.items.length,
+    };
+  }
+
+
+
+  const callback = () => {
+    templateRef?.current?.refetch();
+  };
+
+  const { editYaml, del } = useCommonActions({
+    store: store,
+    params: { cluster },
+    callback: callback,
+  });
+
+  const renderItemActions = useActionMenu({
+      authKey: 'constrainttemplates',
+      params: { cluster: cluster},
+      actions: [{
+        key: 'editYaml',
+        icon: <Pen />,
+        text: t('EDIT_YAML'),
+        action: 'edit',
+        onClick: editYaml,
+      },
+      {
+        key: 'delete',
+        icon: <Trash />,
+        text: t('DELETE'),
+        action: 'delete',
+        onClick: del,
+      }]
+  });
+
+  const columns = [
+    {
+      title: t('Name'),
+      field: 'metadata.name',
+      sortable: false,
+      searchable: false,
+      render: (value, row) => (
+        <Field value={value} label={row.target} as={Link} to={`/clusters/${cluster}/gatekeeper.constrainttemplates/${row.metadata.name}`} />
+      ),
+    },
+    {
+      title: t('Description'),
+      width: '70%',
+      canHide: true,
+      render: (value, row) => (
+        <Field value={
+          row.metadata.annotations["kubesphere.io/description"] == undefined ? "-" : row.metadata.annotations["kubesphere.io/description"]
+        } />
+      ),
+    },
+    {
+      id: 'more',
+      title: '',
+      width: 20,
+      render: (value, record) => renderItemActions({ ...record }),
+    },
+  ];
+
+  const renderTableActions = useActionMenu({
+    authKey: module,
+    params,
+    autoSingleButton: true,
+    actions: [
+      {
+        key: 'create',
+        text: t('CREATE'),
+        action: 'create',
+        props: {
+          color: 'secondary',
+          shadow: true,
+        },
+      },
+    ],
+  });
+
+  return (
+    <>
+      <Banner
+        icon={<Group />}
+        title={t('Constraint Templates')}
+        description={t('CONSTRAINT_TEMPLATES_DESC')}
+        className="mb12"
+      />
+      <DataTable
+        ref={templateRef}
+        columns={columns}
+        tableName="template-list"
+        rowKey="name"
+        format={formatFn}
+        serverDataFormat={formatServerData}
+        placeholder={t('SEARCH_BY_NAME')}
+        url={`${requestTemplatePrefix}/constrainttemplates`}
+        useStorageState={false}
+        disableRowSelect={false}
+        selectType={false}
+        toolbarRight={renderTableActions({})}
+      />
+    </>
+  );
+};
+
+export default ConstraintTemplateList
