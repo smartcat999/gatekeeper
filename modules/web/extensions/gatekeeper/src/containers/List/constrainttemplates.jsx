@@ -1,27 +1,30 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import {
-  Banner,
-  Field,
-} from '@kubed/components';
-import { Group, Pen, Trash } from '@kubed/icons';
-import { DataTable,useCommonActions, useActionMenu,getOriginData } from '@ks-console/shared';
-import store from '../../store';
+import { Banner, Field, useModal, useForm, Switch } from '@kubed/components';
 
+import { Group, Pen, Trash } from '@kubed/icons';
+import { DataTable, useCommonActions, useActionMenu, getOriginData } from '@ks-console/shared';
+import { constraintTemplateStore } from '../../store';
+import FORM_TEMPLATES from '../../utils/form.templates';
+import CreateConstraintTemplateModal from '../../components/Modal/CreateContraintTemplateModal';
 
 const ConstraintTemplateList = () => {
   const { cluster } = useParams();
   const params = useParams();
   const templateRef = useRef();
   const requestTemplatePrefix = '/apis/templates.gatekeeper.sh/v1';
-  const formatFn = (data) => {
+  const [form] = useForm();
+  const [createVisible, setCreateVisible] = useState(false);
+  const module = constraintTemplateStore.module;
+  const formTemplate = FORM_TEMPLATES[module]();
+  const formatFn = data => {
     return {
-      name: data.metadata.name, 
+      name: data.metadata.name,
       _originData: getOriginData(data),
-      ...data
-    }
-  }
+      ...data,
+    };
+  };
   function formatServerData(serverData) {
     return {
       ...serverData,
@@ -30,22 +33,21 @@ const ConstraintTemplateList = () => {
     };
   }
 
-
-
   const callback = () => {
     templateRef?.current?.refetch();
   };
 
   const { editYaml, del } = useCommonActions({
-    store: store,
+    store: constraintTemplateStore,
     params: { cluster },
     callback: callback,
   });
 
   const renderItemActions = useActionMenu({
-      authKey: 'constrainttemplates',
-      params: { cluster: cluster},
-      actions: [{
+    authKey: 'constrainttemplates',
+    params: { cluster: cluster },
+    actions: [
+      {
         key: 'editYaml',
         icon: <Pen />,
         text: t('EDIT_YAML'),
@@ -58,7 +60,8 @@ const ConstraintTemplateList = () => {
         text: t('DELETE'),
         action: 'delete',
         onClick: del,
-      }]
+      },
+    ],
   });
 
   const columns = [
@@ -68,7 +71,12 @@ const ConstraintTemplateList = () => {
       sortable: false,
       searchable: false,
       render: (value, row) => (
-        <Field value={value} label={row.target} as={Link} to={`/clusters/${cluster}/gatekeeper.constrainttemplates/${row.metadata.name}`} />
+        <Field
+          value={value}
+          label={row.target}
+          as={Link}
+          to={`/clusters/${cluster}/gatekeeper.constrainttemplates/${row.metadata.name}`}
+        />
       ),
     },
     {
@@ -76,9 +84,13 @@ const ConstraintTemplateList = () => {
       width: '70%',
       canHide: true,
       render: (value, row) => (
-        <Field value={
-          row.metadata.annotations["kubesphere.io/description"] == undefined ? "-" : row.metadata.annotations["kubesphere.io/description"]
-        } />
+        <Field
+          value={
+            row.metadata.annotations['kubesphere.io/description'] == undefined
+              ? '-'
+              : row.metadata.annotations['kubesphere.io/description']
+          }
+        />
       ),
     },
     {
@@ -102,9 +114,19 @@ const ConstraintTemplateList = () => {
           color: 'secondary',
           shadow: true,
         },
+        onClick: () => {
+          setCreateVisible(true);
+        },
       },
     ],
   });
+
+  const handleCreate = data => {
+    constraintTemplateStore.post(cluster, data).then(() => {
+      callback()
+      setCreateVisible(false)
+    });
+  };
 
   return (
     <>
@@ -128,8 +150,19 @@ const ConstraintTemplateList = () => {
         selectType={false}
         toolbarRight={renderTableActions({})}
       />
+      {createVisible && (
+        <CreateConstraintTemplateModal
+          visible={createVisible}
+          onOk={handleCreate}
+          form={form}
+          initialValues={formTemplate}
+          onCancel={() => {
+            setCreateVisible(false);
+          }}
+        />
+      )}
     </>
   );
 };
 
-export default ConstraintTemplateList
+export default ConstraintTemplateList;

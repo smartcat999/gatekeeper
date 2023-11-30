@@ -2,7 +2,23 @@
   "name": "名称",
   "CONSTRAINT_TEMPLATES_DESC": "ConstraintTemplates 定义了一种方法来验证 Gatekeeper 的 Kubernetes准入控制器中的某些 Kubernetes 对象集。",
   "CONSTRAINT_TEMPLATE": "约束模板",
+  "CREATE_CONSTRAINT_TEMPLATE": "创建约束模板",
   "CONSTRAINT_TEMPLATE_TARGETS": "Targets",
+  "CONSTRAINT_TEMPLATE_TARGETS_DESC": "指定约束模板的适用范围",
   "CONSTRAINT_TEMPLATE_STATUS": "Status",
-  "CONSTRAINT_DESC":"约束条件被管理员用于声明需要强制执行的 Gatekeeper 约束模板。"
+  "CONSTRAINT_DESC":"约束条件被管理员用于声明需要强制执行的 Gatekeeper 约束模板。",
+  "CONSTRAINT": "约束条件",
+  "CONSTRAINT_VIOLATIONS": "Violations",
+  "CONSTRAINT_TEMPLATE_CRD_NAME": "CRD 名称",
+  "CONSTRAINT_TEMPLATE_TARGET": "Target",
+  "CONSTRAINT_TEMPLATE_CRD_NAME_EMPTY": "请输入CRD 名称",
+  "CONSTRAINT_TEMPLATE_TARGETS_EMPTY":"请输入 Tragets",
+  "CONSTRAINT_TEMPLATE_CRD_NAME_DESC": "CRD 名称只能包含大写字母、小写字母、数字和连字符（-），必须以小写字母或数字开头和结尾，最长 63 个字符。",
+  "INVALID_CONSTRAINT_TEMPLATE_NAME_DESC": "名称无效。CRD 名称只能包含大写字母、小写字母、数字和连字符（-），必须以小写字母或数字开头和结尾，最长 63 个字符。",
+
+  "CONSTRAINT_TEMPLATE_TARGET_PLACEHOLDER": "请输入Target",
+  "CONSTRAINT_TEMPLATE_REGO_PLACEHOLDER": "请输入限制条件的源代码",
+  "INVALID_EXPRESSION": "请输入正确的Targets",
+  "constrainttemplates_LOW":"constrainttemplates",
+  "":""
 }

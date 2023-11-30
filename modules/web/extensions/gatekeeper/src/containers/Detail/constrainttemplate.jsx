@@ -1,21 +1,20 @@
 import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import store from '../../store'
+import { constraintTemplateStore } from '../../store';
 
-import {
-  Icon,
-  formatTime,
-  DetailPage,
-} from '@ks-console/shared';
+import { Icon, formatTime, DetailPage } from '@ks-console/shared';
 
 const PATH = '/clusters/:cluster/gatekeeper.constrainttemplates/:name';
 
 const ConstraintTemplateDetails = () => {
   const { cluster, name } = useParams();
   const constraintTemplate = useRef();
-  const tabs = [{ path: `${PATH}/targets`, title: t('CONSTRAINT_TEMPLATE_TARGETS') },{ path: `${PATH}/status`, title: t('CONSTRAINT_TEMPLATE_STATUS') }];
+  const tabs = [
+    { path: `${PATH}/targets`, title: t('CONSTRAINT_TEMPLATE_TARGETS') },
+    { path: `${PATH}/status`, title: t('CONSTRAINT_TEMPLATE_STATUS') },
+  ];
 
-  const attrs = (data) => [
+  const attrs = data => [
     { label: t('CLUSTER_PL'), value: cluster || '' },
     {
       label: t('CREATION_TIME_TCAP'),
@@ -23,17 +22,17 @@ const ConstraintTemplateDetails = () => {
     },
     {
       label: 'CRD',
-      value: data.spec.crd.spec.names.kind || ''
+      value: data.spec.crd.spec.names.kind || '',
     },
-  ]
+  ];
 
   return (
     <>
       <DetailPage
         ref={constraintTemplate}
         tabs={tabs}
-        authKey={store.module}
-        store={store}
+        authKey={constraintTemplateStore.module}
+        store={constraintTemplateStore}
         params={{ cluster, name }}
         sideProps={{
           attrs,
@@ -46,7 +45,6 @@ const ConstraintTemplateDetails = () => {
       />
     </>
   );
-}
+};
 
-
-export default ConstraintTemplateDetails
+export default ConstraintTemplateDetails;

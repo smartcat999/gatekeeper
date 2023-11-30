@@ -6,6 +6,7 @@ const menus = [{
   name: 'gatekeeper',
   title: 'Gatekeeper',
   icon: 'key',
+  assets:'https://open-policy-agent.github.io/gatekeeper/website/img/logo.svg',
   order: 99,
   skipAuth: true,
 },{
