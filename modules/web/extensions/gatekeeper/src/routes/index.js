@@ -1,10 +1,12 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import ConstraintTemplateList from '../containers/List/constrainttemplates'
+import ConstraintTemplateList from '../containers/List/constrainttemplates';
 import ConstraintList from '../containers/List/constraints';
 import ConstraintTemplateDetails from '../containers/Detail/constrainttemplate';
 import ConstraintTemplateTargets from '../containers/Detail/Data/constrainttemplate.targets';
 import ConstraintTemplateStatus from '../containers/Detail/Data/constrainttemplate.status';
+import ConstraintViolation from '../containers/Detail/Data/constraint.violation';
+import ConstraintsDetails from '../containers/Detail/constraints';
 
 export default [
   {
@@ -36,7 +38,14 @@ export default [
     ],
   },
   {
-    path: '/clusters/:cluster/gatekeeper/constraints/:name',
-    element: <ConstraintTemplateDetails />
+    path: '/clusters/:cluster/gatekeeper.constraints/:name',
+    element: <ConstraintsDetails />,
+    children: [
+      { index: true, element: <Navigate to="violations" replace /> },
+      {
+        path: 'violations',
+        element: <ConstraintViolation />,
+      },
+    ],
   },
 ];
