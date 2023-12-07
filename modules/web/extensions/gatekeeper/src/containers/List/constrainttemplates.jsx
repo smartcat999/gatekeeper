@@ -40,7 +40,7 @@ const ConstraintTemplateList = () => {
   const { editYaml, del } = useCommonActions({
     store: constraintTemplateStore,
     params: { cluster },
-    callback: callback,
+    callback,
   });
 
   const renderItemActions = useActionMenu({
@@ -121,11 +121,13 @@ const ConstraintTemplateList = () => {
     ],
   });
 
-  const handleCreate = data => {
-    constraintTemplateStore.post(cluster, data).then(() => {
-      callback()
-      setCreateVisible(false)
-    });
+  const handleCreate = (data) => {
+    constraintTemplateStore.post(cluster, data).then((res) => {
+      if(res){
+        callback()
+        setCreateVisible(false)
+      }
+    }).catch(()=>{})
   };
 
   return (
@@ -159,6 +161,7 @@ const ConstraintTemplateList = () => {
           onCancel={() => {
             setCreateVisible(false);
           }}
+          store={constraintTemplateStore}
         />
       )}
     </>
