@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Empty } from '@kubed/components';
 
 export const Wrapper = styled.div`
   padding: 20px;
@@ -80,4 +81,8 @@ export const CodeEditorOperations = styled.div`
       background-color: transparent;
     }
   }
+`;
+
+export const StyledEmpty = styled(Empty)`
+padding: 32px;
 `;

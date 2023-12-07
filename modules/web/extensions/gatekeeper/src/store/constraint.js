@@ -6,7 +6,7 @@ const mapper = item => {
   return { name: item.metadata.name || item.items[0].metadata.name, ...item }; //TODO:
 };
 
-const getResourceUrl = params => `apis/constraints.gatekeeper.sh/v1beta1`; //`clusters/${params?.cluster}/kapis/templates.gatekeeper.sh/v1/${module}`;
+const getResourceUrl = params => `apis/constraints.gatekeeper.sh/v1beta1`// TODO:
 
 const { ...baseStore } = BaseStore({
   module,

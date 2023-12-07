@@ -12,6 +12,7 @@ const ConstraintTemplateDetails = () => {
   const tabs = [
     { path: `${PATH}/targets`, title: t('CONSTRAINT_TEMPLATE_TARGETS') },
     { path: `${PATH}/status`, title: t('CONSTRAINT_TEMPLATE_STATUS') },
+    { path: `${PATH}/constraints`, title: t('CONSTRAINT_TEMPLATE_DETAIL_CONSTRAINTS') },
   ];
 
   const attrs = data => [

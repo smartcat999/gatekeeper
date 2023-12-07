@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Switch } from '@kubed/components';
 import { Group } from '@kubed/icons';
 import CreateConstraintTemplateForm from '../../Forms/CreateConstraintTemplateForm';
@@ -13,15 +13,23 @@ const CreateConstraintTemplateModal = ({
   visible,
   initialValues,
   onOk,
-  onChange = () => {},
+  store,
+  // onChange = () => {},
 }) => {
   const [isCodeMode, setIsCodeMode] = useState(false);
   const [formData, setFormData] = useState(initialValues);
+  const [yamlData,setYamlData] = useState({})
+
+  useEffect(()=>{
+    if(store){
+      setYamlData(store.yamlRawData)
+    }
+  },[])
 
   const handleSubmit = () => {
     form.validateFields().then(() => {
-      onOk?.(formData);
-    });
+      onOk?.(isCodeMode?yamlData:formData);
+    }).catch(()=>{})
   };
 
   const renderSwitch = () => {
@@ -36,7 +44,9 @@ const CreateConstraintTemplateModal = ({
     setFormData(value);
   };
 
-  const handleYamlChange = value => {};
+  const handleYamlChange = value => {
+    setYamlData(yaml.load(value));
+  };
 
   return (
     <Modal
@@ -46,12 +56,11 @@ const CreateConstraintTemplateModal = ({
       visible={visible}
       onCancel={onCancel}
       headerExtra={renderSwitch()}
-      // confirmLoading={confirmLoading}
       onOk={handleSubmit}
       bodyStyle={{ padding: '20px' }}
     >
       {isCodeMode ? (
-        <CodeEditor mode="yaml" value={yaml.getValue(formData)} onChange={handleYamlChange} />
+        <CodeEditor mode="yaml" value={yaml.getValue(yamlData)} onChange={handleYamlChange} />
       ) : (
         <CreateConstraintTemplateForm
           form={form}
