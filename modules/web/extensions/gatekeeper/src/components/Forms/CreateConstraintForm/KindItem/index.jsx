@@ -37,12 +37,12 @@ const KindItem = props => {
       <Input
         name="apiGroups"
         value={apiGroups}
-        placeholder={'apiGroups'}
+        placeholder={'APIGroup'}
         onChange={handleApiGroupsChange}
       />
       <Input
         name="kinds"
-        placeholder={'kinds'}
+        placeholder={'Kind'}
         value={kinds}
         onChange={handleKindsChange}
       />

@@ -3,7 +3,6 @@ import { Modal, Switch } from '@kubed/components';
 import { Group } from '@kubed/icons';
 import CreateConstraintTemplateForm from '../../Forms/CreateConstraintTemplateForm';
 import { SwitchStyle } from './styles';
-import { yaml } from '@ks-console/shared';
 import { CodeEditor } from '@kubed/code-editor';
 
 const CreateConstraintTemplateModal = ({
@@ -44,7 +43,7 @@ const CreateConstraintTemplateModal = ({
   };
 
   const handleYamlChange = value => {
-    setYamlData(yaml.load(value));
+    setYamlData(value);
   };
 
   return (
@@ -59,7 +58,7 @@ const CreateConstraintTemplateModal = ({
       bodyStyle={{ padding: '20px' }}
     >
       {isCodeMode ? (
-        <CodeEditor mode="yaml" value={yaml.getValue(yamlData)} onChange={handleYamlChange} />
+        <CodeEditor mode="yaml" value={yamlData} onChange={handleYamlChange} />
       ) : (
         <CreateConstraintTemplateForm
           form={form}

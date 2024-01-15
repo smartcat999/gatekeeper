@@ -146,7 +146,7 @@ const CreateConstraintForm = ({
       <NamespaceSelectorWrapper>
         <FormItem
           name={['spec', 'match', 'kinds']}
-          label={'Kinds'}
+          label={'Match Kinds'}
           rules={[
             { required: true, message: t('CONSTRAINT_KINDS_PLACEHOLDER') },
             { validator: itemValidator, checkOnSubmit: true },

@@ -78,17 +78,27 @@ const ConstraintTemplateList = () => {
           to={`/clusters/${cluster}/gatekeeper.constrainttemplates/${row.metadata.name}`}
         />
       ),
-    },
+    }, 
     {
-      title: t('Description'),
-      width: '70%',
+      title: t('Title'),
       canHide: true,
       render: (value, row) => (
         <Field
           value={
-            row.metadata.annotations['kubesphere.io/description'] == undefined
-              ? '-'
-              : row.metadata.annotations['kubesphere.io/description']
+            row.metadata.annotations['metadata.gatekeeper.sh/title']||'-'
+          }
+        />
+      ),
+    },
+    {
+      title: t('Description'),
+      width: '50%',
+      field: 'metadata.annotations.description',
+      canHide: true,
+      render: (value, row) => (
+        <Field
+          value={
+            value||'-'
           }
         />
       ),
