@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Switch } from '@kubed/components'
 import { Group } from '@kubed/icons'
-import { yaml } from '@ks-console/shared'
 import { CodeEditor } from '@kubed/code-editor'
 import CreateConstraintForm from '../../Forms/CreateConstraintForm'
 import { SwitchStyle } from './styles'
@@ -28,7 +27,7 @@ const CreateConstraintModal = ({
     form
       .validateFields()
       .then(() => {
-        onOk?.(isCodeMode ? yaml.load(yamlData) : formData)
+        onOk?.(isCodeMode ? yamlData : formData)
       })
       .catch(() => {})
   }

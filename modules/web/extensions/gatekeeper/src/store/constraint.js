@@ -33,7 +33,11 @@ spec:
 `
 
 const getResourceUrl = params => {
-  return `apis/constraints.gatekeeper.sh/v1beta1/${params.kind}`
+  if(params.kind){
+    return `apis/constraints.gatekeeper.sh/v1beta1/${params.kind}`
+    
+  }
+  return 'apis/constraints.gatekeeper.sh/v1beta1'
 }
 
 const fetchConstraintKind = async () => {
