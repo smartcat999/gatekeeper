@@ -11,8 +11,7 @@ const mapper = item => {
   } 
 }
 
-const yamlRawData = `
-apiVersion: constraints.gatekeeper.sh/v1beta1
+const yamlRawData = `apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPHostFilesystem
 metadata:
   name: psp-host-filesystem
@@ -35,6 +34,7 @@ spec:
 const getResourceUrl = params => {
   if(params.kind){
     return `apis/constraints.gatekeeper.sh/v1beta1/${params.kind.toLowerCase()}`
+    
   }
   return 'apis/constraints.gatekeeper.sh/v1beta1'
 }

@@ -6,8 +6,7 @@ const mapper = item => {
   return { name: item.metadata.name, ...item };
 };
 
-const yamlRawData = `
-apiVersion: templates.gatekeeper.sh/v1
+const yamlRawData = `apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: null
