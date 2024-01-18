@@ -58,6 +58,12 @@ rules:
       - gatekeeper-manager-role
       - gatekeeper-admin-upgrade-crds   
   - apiGroups:
+      - ''
+    resources:
+      - 'secrets'
+    verbs:
+      - 'list'
+  - apiGroups:
       - 'rbac.authorization.k8s.io'
     resources:
       - 'clusterrolebindings'
@@ -92,6 +98,13 @@ rules:
       - 'validatingwebhookconfigurations'
     verbs:
       - '*'
+  - apiGroups:
+      - 'extensions.kubesphere.io'
+    resources:
+      - '*'
+    verbs:
+      - 'create'
+
 
 
 
