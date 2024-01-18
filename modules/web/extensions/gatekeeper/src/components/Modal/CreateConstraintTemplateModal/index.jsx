@@ -4,6 +4,7 @@ import { Group } from '@kubed/icons';
 import CreateConstraintTemplateForm from '../../Forms/CreateConstraintTemplateForm';
 import { SwitchStyle } from './styles';
 import { CodeEditor } from '@kubed/code-editor';
+import { yaml } from '@ks-console/shared';
 
 const CreateConstraintTemplateModal = ({
   form,
@@ -26,7 +27,7 @@ const CreateConstraintTemplateModal = ({
 
   const handleSubmit = () => {
     form.validateFields().then(() => {
-      onOk?.(isCodeMode?yamlData:formData);
+      onOk?.(isCodeMode?yaml.load(yamlData):formData);
     }).catch(()=>{})
   };
 

@@ -1,32 +1,27 @@
-import React, { useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useRef, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-import { Banner, Field, useForm } from '@kubed/components'
-import { Group, Pen, Trash } from '@kubed/icons'
-import {
-  DataTable,
-  useCommonActions,
-  getOriginData,
-  useActionMenu,
-} from '@ks-console/shared'
-import { constraintStore } from '../../store'
-import FORM_TEMPLATES from '../../utils/form.templates'
-import CreateConstraintModal from '../../components/Modal/CreateConstraintModal' // TODO:
+import { Banner, Field, useForm, notify } from '@kubed/components';
+import { Group, Pen, Trash } from '@kubed/icons';
+import { DataTable, useCommonActions, getOriginData, useActionMenu } from '@ks-console/shared';
+import { constraintStore } from '../../store';
+import FORM_TEMPLATES from '../../utils/form.templates';
+import CreateConstraintModal from '../../components/Modal/CreateConstraintModal'; // TODO:
 
 const ConstraintList = () => {
-  const { cluster } = useParams()
-  const params = useParams()
-  const constraintRef = useRef()
-  const [form] = useForm()
-  const [createVisible, setCreateVisible] = useState(false)
-  const module = constraintStore.module
-  const formTemplate = FORM_TEMPLATES[module]()
+  const { cluster } = useParams();
+  const params = useParams();
+  const constraintRef = useRef();
+  const [form] = useForm();
+  const [createVisible, setCreateVisible] = useState(false);
+  const module = constraintStore.module;
+  const formTemplate = FORM_TEMPLATES[module]();
 
   const { editYaml, del } = useCommonActions({
     store: constraintStore,
     params: { cluster },
     callback,
-  })
+  });
 
   const renderItemActions = useActionMenu({
     authKey: 'constraints',
@@ -44,10 +39,21 @@ const ConstraintList = () => {
         icon: <Trash />,
         text: t('DELETE'),
         action: 'delete',
-        onClick: del,
+        onClick: item => {
+          del({
+            onOk: () => {
+              constraintStore.delete(item).then(res => {
+                notify.success(t('DELETED_SUCCESSFULLY'));
+                callback('delete');
+              })
+              .catch(() => {});
+            },
+            resource:[item],
+          });
+        },
       },
     ],
-  })
+  });
 
   const columns = [
     {
@@ -59,9 +65,9 @@ const ConstraintList = () => {
         <Field
           value={value}
           as={Link}
-          to={`/clusters/${
-            params.cluster
-          }/gatekeeper.constraints/${row.kind.toLowerCase()}/${row.name}`}
+          to={`/clusters/${params.cluster}/gatekeeper.constraints/${row.kind.toLowerCase()}/${
+            row.name
+          }`}
         />
       ),
     },
@@ -113,23 +119,23 @@ const ConstraintList = () => {
         },
       },
     ],
-  })
+  });
 
   const callback = () => {
-    constraintRef?.current?.refetch()
-  }
+    constraintRef?.current?.refetch();
+  };
 
   const handleCreate = data => {
     constraintStore
       .post({ kind: data.kind.toLowerCase() }, data)
       .then(res => {
         if (res) {
-          callback()
-          setCreateVisible(false)
+          callback();
+          setCreateVisible(false);
         }
       })
-      .catch(() => {})
-  }
+      .catch(() => {});
+  };
 
   return (
     <>
@@ -145,7 +151,7 @@ const ConstraintList = () => {
         tableName="constraint-list"
         rowKey="uid"
         format={data => {
-          return formatFn(data)
+          return formatFn(data);
         }}
         serverDataFormat={formatServerData}
         placeholder={t('SEARCH_BY_NAME')}
@@ -162,13 +168,13 @@ const ConstraintList = () => {
           form={form}
           initialValues={formTemplate}
           onCancel={() => {
-            setCreateVisible(false)
+            setCreateVisible(false);
           }}
           store={constraintStore}
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default ConstraintList
+export default ConstraintList;

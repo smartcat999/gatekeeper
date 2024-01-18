@@ -22,6 +22,7 @@
   "CONSTRAINT_TEMPLATE_REGO_PLACEHOLDER": "Please enter the rego",
   "INVALID_EXPRESSION": "Please enter the correct targets",
   "constrainttemplates_LOW":"constrainttemplates",
+  "constraints_LOW":"constraint",
 
   "CREATE_CONSTRAINT": "Create Constraint",
   "CONSTRAINT_KIND":"Constraint Kind",
