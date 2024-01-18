@@ -22,6 +22,7 @@
   "CONSTRAINT_TEMPLATE_REGO_PLACEHOLDER": "请输入限制条件的源代码",
   "INVALID_EXPRESSION": "请输入正确的 Targets",
   "constrainttemplates_LOW":"constrainttemplates",
+  "constraints_LOW":"constraint",
 
   "CREATE_CONSTRAINT": "创建约束条件",
   "CONSTRAINT_KIND":"约束条件类型",

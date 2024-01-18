@@ -34,8 +34,7 @@ spec:
 
 const getResourceUrl = params => {
   if(params.kind){
-    return `apis/constraints.gatekeeper.sh/v1beta1/${params.kind}`
-    
+    return `apis/constraints.gatekeeper.sh/v1beta1/${params.kind.toLowerCase()}`
   }
   return 'apis/constraints.gatekeeper.sh/v1beta1'
 }

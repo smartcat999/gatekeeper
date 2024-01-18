@@ -4,6 +4,7 @@ import { Group } from '@kubed/icons'
 import { CodeEditor } from '@kubed/code-editor'
 import CreateConstraintForm from '../../Forms/CreateConstraintForm'
 import { SwitchStyle } from './styles'
+import { yaml } from '@ks-console/shared'
 
 const CreateConstraintModal = ({
   form,
@@ -27,7 +28,7 @@ const CreateConstraintModal = ({
     form
       .validateFields()
       .then(() => {
-        onOk?.(isCodeMode ? yamlData : formData)
+        onOk?.(isCodeMode ? yaml.load(yamlData) : formData)
       })
       .catch(() => {})
   }
