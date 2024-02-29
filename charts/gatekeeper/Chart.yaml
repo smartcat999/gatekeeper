@@ -7,6 +7,9 @@ dependencies:
   - name: gatekeeper
     tags:
     - agent
+  - name: agent
+    tags:
+    - agent
   - name: extension
     tags:
     - extension
