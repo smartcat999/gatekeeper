@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	gatekeeperv3 "github.com/open-policy-agent/gatekeeper/v3/apis"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -132,12 +133,16 @@ func DefaultFilter(object runtime.Object, filter query.Filter) bool {
 }
 
 func (h *listConstraintsHandler) getAllGroupVersionKinds() ([]schema.GroupVersionKind, error) {
+	var ret []schema.GroupVersionKind
 	discoveryClient, err := discovery.NewDiscoveryClientForConfig(h.client.GetConfig())
 	if err != nil {
 		return nil, err
 	}
 	l, err := discoveryClient.ServerResourcesForGroupVersion(constraintsGV)
 	if err != nil {
+		if apierrors.IsNotFound(err) {
+			return ret, nil
+		}
 		return nil, err
 	}
 	resourceGV := strings.Split(constraintsGV, "/")
@@ -148,7 +153,7 @@ func (h *listConstraintsHandler) getAllGroupVersionKinds() ([]schema.GroupVersio
 	for i := range l.APIResources {
 		unique[schema.GroupVersionKind{Group: group, Version: version, Kind: l.APIResources[i].Kind}] = true
 	}
-	var ret []schema.GroupVersionKind
+
 	for gvk := range unique {
 		ret = append(ret, gvk)
 	}
