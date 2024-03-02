@@ -1,4 +1,5 @@
-import { BaseStore } from '@ks-console/shared';
+import { BaseStore, getPath } from '@ks-console/shared';
+import { API_VERSIONS } from '../utils/constants';
 
 const module = 'constrainttemplates';
 
@@ -24,7 +25,7 @@ spec:
       rego: ''
 `
 
-const getResourceUrl = params => `/apis/templates.gatekeeper.sh/v1/${module}`;
+const getResourceUrl = (params) => `${API_VERSIONS[module]}${getPath(params)}/${module}`
 
 const { ...baseStore } = BaseStore({
   module,

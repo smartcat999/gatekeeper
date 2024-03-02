@@ -22,6 +22,7 @@ const CreateConstraintForm = ({
   className,
   store,
   initialValues,
+  cluster,
   onChange = () => {},
 }) => {
   const [kindOptions, setKindOptions] = useState([])
@@ -44,7 +45,7 @@ const CreateConstraintForm = ({
   }, [])
 
   const handleGetKind = async () => {
-    const result = await store.fetchConstraintKind()
+    const result = await store.fetchConstraintKind({cluster})
 
     const options =
       result?.data.map(item => {
@@ -88,7 +89,7 @@ const CreateConstraintForm = ({
     }
     const { kind } = form.getFieldsValue()
 
-    const res = await store.checkName({ name: value, kind: kind.toLowerCase() })
+    const res = await store.checkName({ name: value, kind: kind.toLowerCase(), cluster })
     if (res.exist) {
       return Promise.reject({ message: t('NAME_EXIST_DESC') })
     }

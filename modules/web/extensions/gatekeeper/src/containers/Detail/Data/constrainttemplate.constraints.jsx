@@ -26,7 +26,7 @@ function ConstraintTemplateConstraints() {
     };
   }
 
-  const url = constraintStore.getDetailUrl({ name });
+  const url = constraintStore.getDetailUrl(params);
   const columns = [
     {
       title: t('name'),
