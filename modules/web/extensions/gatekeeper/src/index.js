@@ -8,20 +8,19 @@ const menus = [{
   icon: 'key',
   assets:'https://open-policy-agent.github.io/gatekeeper/website/img/logo.svg',
   order: 99,
-  skipAuth: true,
 },{
   parent: 'cluster.gatekeeper',
   name: 'gatekeeper.constrainttemplates',
   title: 'Constraint Templates',
   order: 0,
-  skipAuth: true,
+  clusterModule: 'gatekeeper',
 },
 {
   parent: 'cluster.gatekeeper',
   name: 'gatekeeper.constraints',
   title: 'Constraints',
   order: 1,
-  skipAuth: true,
+  clusterModule: 'gatekeeper',
 }]
 
 
@@ -31,4 +30,4 @@ const extensionConfig = {
   locales,
 };
 
-globals.context.registerExtension(extensionConfig);
+export default extensionConfig;

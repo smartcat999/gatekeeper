@@ -13,10 +13,9 @@ const ConstraintTemplateList = () => {
   const { cluster } = useParams();
   const params = useParams();
   const templateRef = useRef();
-  const requestTemplatePrefix = '/apis/templates.gatekeeper.sh/v1';
   const [form] = useForm();
   const [createVisible, setCreateVisible] = useState(false);
-  const module = constraintTemplateStore.module;
+  const {module, getResourceUrl} = constraintTemplateStore;
   const formTemplate = FORM_TEMPLATES[module]();
   const formatFn = data => {
     return {
@@ -156,7 +155,7 @@ const ConstraintTemplateList = () => {
         format={formatFn}
         serverDataFormat={formatServerData}
         placeholder={t('SEARCH_BY_NAME')}
-        url={`${requestTemplatePrefix}/constrainttemplates`}
+        url={getResourceUrl(params)}
         useStorageState={false}
         disableRowSelect={false}
         selectType={false}

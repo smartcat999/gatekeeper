@@ -1,5 +1,6 @@
-import { BaseStore, request } from '@ks-console/shared'
+import { BaseStore, getPath, request } from '@ks-console/shared'
 import { find, get, isEmpty } from 'lodash'
+import { API_VERSIONS } from '../utils/constants'
 
 const module = 'constraints'
 
@@ -31,16 +32,19 @@ spec:
   parameters: {}
 `
 
-const getResourceUrl = params => {
-  if(params.kind){
-    return `apis/constraints.gatekeeper.sh/v1beta1/${params.kind.toLowerCase()}`
-    
+const getResourceUrl = (params, ksVersion) => {
+  if (ksVersion) {
+    return `kapis/constraints.gatekeeper.sh/v1beta1${getPath(params)}/${module}`;
+  } else {
+    if (params.kind) {
+      return `${API_VERSIONS[module]}${getPath(params)}/${params.kind.toLowerCase()}`;
+    }
+    return `${API_VERSIONS[module]}${getPath(params)}`;
   }
-  return 'apis/constraints.gatekeeper.sh/v1beta1'
 }
 
-const fetchConstraintKind = async () => {
-  const url = `apis/templates.gatekeeper.sh/v1/constrainttemplates`
+const fetchConstraintKind = async (params) => {
+  const url = `${API_VERSIONS['constrainttemplates']}${getPath(params)}/constrainttemplates`
   const result = await request.get(url)
   const items = get(result, 'items', [])
   return {
@@ -49,9 +53,9 @@ const fetchConstraintKind = async () => {
   }
 }
 
-const checkNameFn = async ({ name, kind }) => {
+const checkNameFn = async ({ name, kind,cluster }) => {
   if (kind) {
-    const url = `kapis/constraints.gatekeeper.sh/v1beta1/constraints`
+    const url = `${API_VERSIONS[module]}${getPath({cluster})}/${module}`
     const result = await request.get(url)
     const items = get(result, 'items', [])
     return isEmpty(find(items, { 'metadata.name': name, kind }))
@@ -59,9 +63,6 @@ const checkNameFn = async ({ name, kind }) => {
   return false
 }
 
-const create = async data => {
-  return request.post(`apis/constraints.gatekeeper.sh/v1beta1/${module}`, data)
-}
 
 const { ...baseStore } = BaseStore({
   module,
@@ -76,7 +77,6 @@ const constraintStore = {
   mapper,
   fetchConstraintKind,
   yamlRawData,
-  create,
   checkNameFn,
 }
 

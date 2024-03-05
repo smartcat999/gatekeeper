@@ -14,8 +14,10 @@ const ConstraintList = () => {
   const constraintRef = useRef();
   const [form] = useForm();
   const [createVisible, setCreateVisible] = useState(false);
-  const module = constraintStore.module;
+  const {module, getResourceUrl} = constraintStore;
   const formTemplate = FORM_TEMPLATES[module]();
+
+  const url = getResourceUrl(params,true);
 
   const { editYaml, del } = useCommonActions({
     store: constraintStore,
@@ -127,7 +129,7 @@ const ConstraintList = () => {
 
   const handleCreate = data => {
     constraintStore
-      .post({ kind: data.kind.toLowerCase() }, data)
+      .post({ kind: data.kind.toLowerCase(), cluster }, data)
       .then(res => {
         if (res) {
           callback();
@@ -155,7 +157,7 @@ const ConstraintList = () => {
         }}
         serverDataFormat={formatServerData}
         placeholder={t('SEARCH_BY_NAME')}
-        url={`/kapis/constraints.gatekeeper.sh/v1beta1/constraints`}
+        url={url}
         useStorageState={false}
         disableRowSelect={false}
         selectType={false}
@@ -171,6 +173,7 @@ const ConstraintList = () => {
             setCreateVisible(false);
           }}
           store={constraintStore}
+          cluster={cluster}
         />
       )}
     </>

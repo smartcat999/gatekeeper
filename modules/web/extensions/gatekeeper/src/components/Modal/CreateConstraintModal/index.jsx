@@ -13,6 +13,7 @@ const CreateConstraintModal = ({
   initialValues,
   onOk,
   store,
+  cluster,
 }) => {
   const [isCodeMode, setIsCodeMode] = useState(false)
   const [formData, setFormData] = useState(initialValues)
@@ -72,6 +73,7 @@ const CreateConstraintModal = ({
           initialValues={initialValues}
           onChange={handleChange}
           store={store}
+          cluster={cluster}
         />
       )}
     </Modal>
