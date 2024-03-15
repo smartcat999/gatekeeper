@@ -28,6 +28,7 @@ const extensionConfig = {
   menus,
   routes,
   locales,
+  isCheckLicense: true,
 };
 
 export default extensionConfig;
