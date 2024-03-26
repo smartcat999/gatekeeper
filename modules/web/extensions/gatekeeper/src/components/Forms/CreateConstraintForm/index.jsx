@@ -61,7 +61,8 @@ const CreateConstraintForm = ({
   const handleChange = () => {
     const formData = form.getFieldsValue()
 
-    onChange(merge(initialValues, formData))
+    const newData = merge({},initialValues, formData)
+    onChange(newData)
   }
 
   const checkItemValid = item => {
@@ -131,7 +132,7 @@ const CreateConstraintForm = ({
       </FormItem>
 
       <FormItem
-        name={['spec', 'enforcementActions']}
+        name={['spec', 'enforcementAction']}
         label={t('ENFORCEMENT_ACTIONS_PLACEHOLDER')}
         rules={[
           { required: true, message: t('ENFORCEMENT_ACTIONS_PLACEHOLDER') },
@@ -165,7 +166,7 @@ const CreateConstraintForm = ({
 
       <NamespaceSelectorWrapper>
         <FormItemWrapper
-          name={['spec', 'namespaceSelector', 'matchLabels']}
+          name={['spec', 'match','namespaceSelector', 'matchLabels']}
           label={t('NAMESPACE_LABELS')}
           validateStatus={error ? 'error' : undefined}
           className="xxx"

@@ -19,11 +19,6 @@ const CreateConstraintTemplateModal = ({
   const [formData, setFormData] = useState(initialValues);
   const [yamlData,setYamlData] = useState({})
 
-  useEffect(()=>{
-    if(store){
-      setYamlData(store.yamlRawData)
-    }
-  },[])
 
   const handleSubmit = () => {
     form.validateFields().then(() => {
@@ -31,10 +26,18 @@ const CreateConstraintTemplateModal = ({
     }).catch(()=>{})
   };
 
+  const handleChangeEditType=value =>{
+    setIsCodeMode(value)
+    if(value){
+      setYamlData(yaml.getValue(formData))
+    }
+    
+  }
+
   const renderSwitch = () => {
     return (
       <SwitchStyle>
-        <Switch onChange={value => setIsCodeMode(value)} label={t('EDIT_YAML')} variant="button" />
+        <Switch onChange={handleChangeEditType} label={t('EDIT_YAML')} variant="button" />
       </SwitchStyle>
     );
   };
@@ -63,7 +66,7 @@ const CreateConstraintTemplateModal = ({
       ) : (
         <CreateConstraintTemplateForm
           form={form}
-          initialValues={initialValues}
+          initialValues={formData}
           onChange={handleChange}
         />
       )}
