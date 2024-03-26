@@ -5,6 +5,7 @@ import { CodeEditor } from '@kubed/code-editor'
 import CreateConstraintForm from '../../Forms/CreateConstraintForm'
 import { SwitchStyle } from './styles'
 import { yaml } from '@ks-console/shared'
+import { cloneDeep } from 'lodash'
 
 const CreateConstraintModal = ({
   form,
@@ -16,7 +17,7 @@ const CreateConstraintModal = ({
   cluster,
 }) => {
   const [isCodeMode, setIsCodeMode] = useState(false)
-  const [formData, setFormData] = useState(initialValues)
+  const [formData, setFormData] = useState(cloneDeep(initialValues))
   const [yamlData, setYamlData] = useState('')
 
   const handleSubmit = () => {
@@ -32,6 +33,8 @@ const CreateConstraintModal = ({
     setIsCodeMode(value)
     if(value){
       setYamlData(yaml.getValue(formData))
+    }else{
+      setFormData(yaml.load(yamlData))
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Switch } from '@kubed/components';
 import { Group } from '@kubed/icons';
 import CreateConstraintTemplateForm from '../../Forms/CreateConstraintTemplateForm';
@@ -30,6 +30,8 @@ const CreateConstraintTemplateModal = ({
     setIsCodeMode(value)
     if(value){
       setYamlData(yaml.getValue(formData))
+    }else{
+      setFormData(yaml.load(yamlData))
     }
     
   }
