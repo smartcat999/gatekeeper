@@ -62,26 +62,18 @@ gatekeeper:
         pullPolicy: IfNotPresent
         pullSecrets: []
       extraNamespaces: []
-      podSecurity:
-        [
-          "pod-security.kubernetes.io/audit=restricted",
-          "pod-security.kubernetes.io/audit-version=latest",
-          "pod-security.kubernetes.io/warn=restricted",
-          "pod-security.kubernetes.io/warn-version=latest",
-          "pod-security.kubernetes.io/enforce=privileged",
-          "pod-security.kubernetes.io/enforce-version=v1.24",
-        ]
+      podSecurity: ["pod-security.kubernetes.io/audit=restricted", "pod-security.kubernetes.io/audit-version=latest", "pod-security.kubernetes.io/warn=restricted", "pod-security.kubernetes.io/warn-version=latest", "pod-security.kubernetes.io/enforce=privileged", "pod-security.kubernetes.io/enforce-version=v1.24"]
       extraAnnotations: {}
       priorityClassName: ""
     affinity: {}
     tolerations: []
-    nodeSelector: { kubernetes.io/os: linux }
+    nodeSelector: {kubernetes.io/os: linux}
     resources: {}
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-          - ALL
+        - ALL
       readOnlyRootFilesystem: true
       runAsGroup: 999
       runAsNonRoot: true
@@ -96,15 +88,7 @@ gatekeeper:
         pullPolicy: IfNotPresent
         pullSecrets: []
       extraNamespaces: []
-      podSecurity:
-        [
-          "pod-security.kubernetes.io/audit=restricted",
-          "pod-security.kubernetes.io/audit-version=latest",
-          "pod-security.kubernetes.io/warn=restricted",
-          "pod-security.kubernetes.io/warn-version=latest",
-          "pod-security.kubernetes.io/enforce=privileged",
-          "pod-security.kubernetes.io/enforce-version=v1.24",
-        ]
+      podSecurity: ["pod-security.kubernetes.io/audit=restricted", "pod-security.kubernetes.io/audit-version=latest", "pod-security.kubernetes.io/warn=restricted", "pod-security.kubernetes.io/warn-version=latest", "pod-security.kubernetes.io/enforce=privileged", "pod-security.kubernetes.io/enforce-version=v1.24"]
       extraAnnotations: {}
       priorityClassName: ""
     probeWebhook:
@@ -120,12 +104,12 @@ gatekeeper:
       priorityClassName: ""
     affinity: {}
     tolerations: []
-    nodeSelector: { kubernetes.io/os: linux }
+    nodeSelector: {kubernetes.io/os: linux}
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-          - ALL
+        - ALL
       readOnlyRootFilesystem: true
       runAsGroup: 999
       runAsNonRoot: true
@@ -142,13 +126,13 @@ gatekeeper:
       priorityClassName: ""
     affinity: {}
     tolerations: []
-    nodeSelector: { kubernetes.io/os: linux }
+    nodeSelector: {kubernetes.io/os: linux}
     resources: {}
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-          - ALL
+        - ALL
       readOnlyRootFilesystem: true
       runAsGroup: 999
       runAsNonRoot: true
@@ -177,18 +161,18 @@ gatekeeper:
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: gatekeeper.sh/operation
-                    operator: In
-                    values:
-                      - webhook
-              topologyKey: kubernetes.io/hostname
-            weight: 100
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: gatekeeper.sh/operation
+                operator: In
+                values:
+                - webhook
+            topologyKey: kubernetes.io/hostname
+          weight: 100
     topologySpreadConstraints: []
     tolerations: []
-    nodeSelector: { kubernetes.io/os: linux }
+    nodeSelector: {kubernetes.io/os: linux}
     resources:
       limits:
         memory: 512Mi
@@ -199,7 +183,7 @@ gatekeeper:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-          - ALL
+        - ALL
       readOnlyRootFilesystem: true
       runAsGroup: 999
       runAsNonRoot: true
@@ -207,15 +191,14 @@ gatekeeper:
     podSecurityContext:
       fsGroup: 999
       supplementalGroups:
-        - 999
+      - 999
     extraRules: []
     networkPolicy:
       enabled: false
-      ingress:
-        {}
-        # - from:
-        #   - ipBlock:
-        #       cidr: 0.0.0.0/0
+      ingress: {}
+      # - from:
+      #   - ipBlock:
+      #       cidr: 0.0.0.0/0
   audit:
     enablePubsub: false
     hostNetwork: false
@@ -228,7 +211,7 @@ gatekeeper:
     disableCertRotation: false
     affinity: {}
     tolerations: []
-    nodeSelector: { kubernetes.io/os: linux }
+    nodeSelector: {kubernetes.io/os: linux}
     resources:
       limits:
         memory: 512Mi
@@ -239,7 +222,7 @@ gatekeeper:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-          - ALL
+        - ALL
       readOnlyRootFilesystem: true
       runAsGroup: 999
       runAsNonRoot: true
@@ -247,19 +230,19 @@ gatekeeper:
     podSecurityContext:
       fsGroup: 999
       supplementalGroups:
-        - 999
+      - 999
     writeToRAMDisk: false
     extraRules: []
   crds:
     affinity: {}
     tolerations: []
-    nodeSelector: { kubernetes.io/os: linux }
+    nodeSelector: {kubernetes.io/os: linux}
     resources: {}
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-          - ALL
+        - ALL
       readOnlyRootFilesystem: true
       runAsGroup: 65532
       runAsNonRoot: true
@@ -284,6 +267,12 @@ gatekeeper:
 agent:
   replicaCount: 1
   image:
-    repository: docker.io/kubesphere/gatekeeper-extension-apiserver
+    repository: kubesphere/gatekeeper-extension-apiserver
     tag: "v0.1.0"
     pullPolicy: IfNotPresent
+  kubectl:
+    image:
+      repository: kubesphere/kubectl
+      tag: "v1.27.12"
+      pullPolicy: IfNotPresent
+
