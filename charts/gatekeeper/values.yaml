@@ -1,5 +1,7 @@
+global:
+  imageRegistry: docker.io
 gatekeeper:
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 10
   auditInterval: 60
   metricsBackends: ["prometheus"]
@@ -44,14 +46,13 @@ gatekeeper:
   externaldataProviderResponseCacheTTL: 3m
   image:
     repository: openpolicyagent/gatekeeper
-    crdRepository: openpolicyagent/gatekeeper-crds
-    release: v3.14.0
+    tag: v3.14.0
     pullPolicy: IfNotPresent
     pullSecrets: []
   preInstall:
     crdRepository:
       image:
-        repository: null
+        repository: openpolicyagent/gatekeeper-crds
         tag: v3.14.0
   postUpgrade:
     labelNamespace:
@@ -62,7 +63,7 @@ gatekeeper:
         pullPolicy: IfNotPresent
         pullSecrets: []
       extraNamespaces: []
-      podSecurity: ["pod-security.kubernetes.io/audit=restricted", "pod-security.kubernetes.io/audit-version=latest", "pod-security.kubernetes.io/warn=restricted", "pod-security.kubernetes.io/warn-version=latest", "pod-security.kubernetes.io/enforce=privileged", "pod-security.kubernetes.io/enforce-version=v1.24"]
+      podSecurity: ["pod-security.kubernetes.io/audit=baseline", "pod-security.kubernetes.io/audit-version=latest", "pod-security.kubernetes.io/warn=baseline", "pod-security.kubernetes.io/warn-version=latest", "pod-security.kubernetes.io/enforce=baseline", "pod-security.kubernetes.io/enforce-version=v1.24"]
       extraAnnotations: {}
       priorityClassName: ""
     affinity: {}
@@ -80,7 +81,7 @@ gatekeeper:
       runAsUser: 1000
   postInstall:
     labelNamespace:
-      enabled: true
+      enabled: false
       extraRules: []
       image:
         repository: openpolicyagent/gatekeeper-crds
@@ -88,14 +89,14 @@ gatekeeper:
         pullPolicy: IfNotPresent
         pullSecrets: []
       extraNamespaces: []
-      podSecurity: ["pod-security.kubernetes.io/audit=restricted", "pod-security.kubernetes.io/audit-version=latest", "pod-security.kubernetes.io/warn=restricted", "pod-security.kubernetes.io/warn-version=latest", "pod-security.kubernetes.io/enforce=privileged", "pod-security.kubernetes.io/enforce-version=v1.24"]
+      podSecurity: ["pod-security.kubernetes.io/audit=baseline", "pod-security.kubernetes.io/audit-version=latest", "pod-security.kubernetes.io/warn=baseline", "pod-security.kubernetes.io/warn-version=latest", "pod-security.kubernetes.io/enforce=baseline", "pod-security.kubernetes.io/enforce-version=v1.24"]
       extraAnnotations: {}
       priorityClassName: ""
     probeWebhook:
       enabled: true
       image:
-        repository: curlimages/curl
-        tag: 7.83.1
+        repository: kubesphere/kubectl
+        tag: v1.27.12
         pullPolicy: IfNotPresent
         pullSecrets: []
       waitTimeout: 60
