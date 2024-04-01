@@ -38,7 +38,7 @@ const getConstraintTemplate = ()=>({
     match:{
       kinds:[
         {
-          apiGroups:[],
+          apiGroups:[''],
           kinds:[],
         }
       ],

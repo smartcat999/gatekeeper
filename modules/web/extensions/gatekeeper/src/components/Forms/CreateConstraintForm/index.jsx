@@ -65,7 +65,7 @@ const CreateConstraintForm = ({
   }
 
   const checkItemValid = item => {
-    return !isEmpty(item.kinds) || !isEmpty(item.apiGroups)
+    return !isEmpty(item.kinds)
   }
 
   const itemValidator = (rule, value, callback) => {

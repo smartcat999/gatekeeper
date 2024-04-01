@@ -6,18 +6,18 @@ import { isEmpty } from 'lodash'
 
 const KindItem = props => {
   const { onChange, value } = props
-  const [apiGroups, setApiGroups] = useState(value.apiGroups || [])
+  const [apiGroups, setApiGroups] = useState(value.apiGroups || [''])
   const [kinds, setKinds] = useState(value.kinds || [])//Pod
 
   useEffect(() => {
-    if(!isEmpty(kinds)||!isEmpty(apiGroups)){
+    if(!isEmpty(apiGroups)){
       handleChange()
     }
   }, [kinds, apiGroups])
 
   const handleApiGroupsChange = e => {
     const _value = e.target.value
-    setApiGroups(_value?_value.split(','):[])
+    setApiGroups(_value?_value.split(','):[''])
   }
 
   const handleKindsChange = e => {
