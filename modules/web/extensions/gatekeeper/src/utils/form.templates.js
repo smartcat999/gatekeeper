@@ -39,7 +39,7 @@ const getConstraintTemplate = ()=>({
       kinds:[
         {
           apiGroups:[''],
-          kinds:[],
+          kinds:['Pod'],
         }
       ],
       namespaces:[{name:""}],

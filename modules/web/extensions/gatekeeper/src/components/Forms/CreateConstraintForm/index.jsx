@@ -12,7 +12,6 @@ import ParameterItem from './ParameterItem'
 import {
   FormWrapper,
   FormItemError,
-  FormItemWrapper,
   NamespaceSelectorWrapper,
 } from './styles'
 
@@ -65,7 +64,7 @@ const CreateConstraintForm = ({
   }
 
   const checkItemValid = item => {
-    return !isEmpty(item.kinds)
+    return !isEmpty(item.kinds) 
   }
 
   const itemValidator = (rule, value, callback) => {
@@ -88,10 +87,11 @@ const CreateConstraintForm = ({
       Promise.resolve()
     }
     const { kind } = form.getFieldsValue()
-
-    const res = await store.checkName({ name: value, kind: kind.toLowerCase(), cluster })
-    if (res.exist) {
-      return Promise.reject({ message: t('NAME_EXIST_DESC') })
+    if(value){
+      const res = await store.checkName({ name: value, kind: kind.toLowerCase(), cluster })
+      if (res.exist) {
+        return Promise.reject({ message: t('NAME_EXIST_DESC') })
+      }
     }
     Promise.resolve()
   }
