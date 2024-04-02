@@ -59,8 +59,7 @@ const CreateConstraintForm = ({
 
   const handleChange = () => {
     const formData = form.getFieldsValue()
-
-    onChange(formData)
+    onChange({...formData,apiVersion: 'constraints.gatekeeper.sh/v1beta1',})
   }
 
   const checkItemValid = item => {
@@ -88,7 +87,7 @@ const CreateConstraintForm = ({
     }
     const { kind } = form.getFieldsValue()
     if(value){
-      const res = await store.checkName({ name: value, kind: kind.toLowerCase(), cluster })
+      const res = await store.checkNameFn({ name: value, kind, cluster })
       if (res.exist) {
         return Promise.reject({ message: t('NAME_EXIST_DESC') })
       }

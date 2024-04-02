@@ -55,12 +55,12 @@ const fetchConstraintKind = async (params) => {
 
 const checkNameFn = async ({ name, kind,cluster }) => {
   if (kind) {
-    const url = `${API_VERSIONS[module]}${getPath({cluster})}/${module}`
+    const url = `kapis/constraints.gatekeeper.sh/v1beta1${getPath({cluster})}/${module}`
     const result = await request.get(url)
     const items = get(result, 'items', [])
-    return isEmpty(find(items, { 'metadata.name': name, kind }))
+    return {exist:!isEmpty(find(items, (item)=>item.metadata.name===name&&item.kind===kind))}
   }
-  return false
+  return {exist:false}
 }
 
 
