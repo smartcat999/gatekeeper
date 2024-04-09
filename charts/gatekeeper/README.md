@@ -1,15 +1,15 @@
-[Gatekeeper](https://github.com/open-policy-agent/gatekeeper) is an open-source project that serves as a policy-based, declarative Kubernetes configuration validation tool. The Gatekeeper project aims to assist teams in ensuring that workloads and configurations within their Kubernetes clusters adhere to predefined security and operational specifications.
+[Gatekeeper](https://github.com/open-policy-agent/gatekeeper) is an admission controller for Kubernetes that allows flexible configuration of policies, using [Open Policy Agent (OPA)](https://www.openpolicyagent.org/) to validate requests to create and update resources on a Kubernetes cluster.
 
-Gatekeeper utilizes Kubernetes Custom Resource Definitions (CRDs) and controllers to enforce policies on Kubernetes resources. It employs rule-based configurations to define constraints on resources such as workloads, service accounts, network policies, and more, ensuring they align with organizational or team-defined best practices and security standards.
+Gatekeeper enables the flexible definition of admission policies, enforcing security admission reviews at the cluster level to ensure stability and regulatory compliance of Kubernetes clusters.
 
 Key features of Gatekeeper include:
 
-1. **Policy Definition:** Gatekeeper allows users to define policies using Kubernetes-style YAML files. These policy rules typically include constraints on resources, such as labels, annotations, resource quotas, and more.
+1. **Flexibility:** Gatekeeper allows users to declaratively define admission policies that apply to selected namespaces and resource types.
 
-2. **Flexibility:** Gatekeeper provides a flexible, extensible framework that allows for the creation of custom policies based on organizational requirements.
+2. **Programmability:** Gatekeeper uses Open Policy Agent (OPA) as its decision engine, enabling complex security policy definitions using Rego.
 
-3. **Webhook Validation:** Gatekeeper utilizes Kubernetes' dynamic admission control mechanism and integrates with the Kubernetes API Server through webhooks to validate resources. This means that when users attempt to create, update, or delete resources, Gatekeeper will validate these requests and either deny or allow them based on policies.
+3. **Rollout:** Supports gradual enforcement of admission policies in a phased manner to mitigate the risk of disrupting workloads.
 
-4. **OPA Integration:** Gatekeeper integrates with the Open Policy Agent (OPA) for policy evaluation. This enables Gatekeeper to leverage OPA's powerful policy engine, supporting more complex and advanced policy definitions.
+4. **Pre-release mechanism:** Gatekeeper provides mechanisms to test the impact and scope of security policies before enforcement.
 
-Through Gatekeeper, teams can enforce security and operational standards at the cluster level, ensuring the stability and security of the Kubernetes environment.
+[OPA Gatekeeper Library](https://open-policy-agent.github.io/gatekeeper-library/website/) provides a collection of commonly used security admission policies.
