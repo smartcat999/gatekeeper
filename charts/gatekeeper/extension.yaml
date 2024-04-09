@@ -1,6 +1,6 @@
 apiVersion: kubesphere.io/v1alpha1
 name: gatekeeper
-version: 1.0.0-rc.0
+version: 1.0.0
 displayName:
   en: Gatekeeper
   zh: Gatekeeper
@@ -11,20 +11,20 @@ description:
     Gatekeeper is a security policy management tool based on OPA
 category: security
 keywords:
-  - security
-  - gatekeeper
-  - opa
-  - admission webhook
+- security
+- gatekeeper
+- opa
+- admission webhook
 home: https://kubesphere.io
 docs: https://open-policy-agent.github.io/gatekeeper/website/docs/
 sources:
-  - https://github.com/kubesphere-extensions/gatekeeper
-  - https://github.com/open-policy-agent/gatekeeper
+- https://github.com/kubesphere-extensions/gatekeeper
+- https://github.com/open-policy-agent/gatekeeper
 kubeVersion: '>=1.19.0-0'
 ksVersion: '>=4.0.0-0'
 maintainers:
-  - name: KubeSphere
-    email: kubesphere@yunify.com
+- name: KubeSphere
+  email: kubesphere@yunify.com
 provider:
   zh:
     name: 北京青云科技股份有限公司
@@ -36,21 +36,21 @@ provider:
     url: https://kubesphere.co/
 icon: ./logo.svg
 dependencies:
-  - name: gatekeeper
-    tags:
-      - agent
-  - name: agent
-    tags:
-      - agent
-  - name: extension
-    tags:
-      - extension
+- name: gatekeeper
+  tags:
+  - agent
+- name: agent
+  tags:
+  - agent
+- name: extension
+  tags:
+  - extension
 # installationMode describes how to install subcharts, it can be HostOnly or Multicluster.
 # In Multicluster mode, the subchart with tag `extension` will only be deployed to the host cluster,
 # and the subchart with tag `agent` will be deployed to all selected clusters.
 installationMode: Multicluster
 images:
-  - docker.io/kubesphere/gatekeeper-extension-apiserver:v1.0.0-rc.0
-  - docker.io/kubesphere/kubectl:v1.27.12
-  - docker.io/openpolicyagent/gatekeeper:v3.14.0
-  - docker.io/openpolicyagent/gatekeeper-crds:v3.14.0
+- docker.io/kubesphere/gatekeeper-extension-apiserver:v1.0.0-rc.0
+- docker.io/kubesphere/kubectl:v1.27.12
+- docker.io/openpolicyagent/gatekeeper:v3.14.0
+- docker.io/openpolicyagent/gatekeeper-crds:v3.14.0
