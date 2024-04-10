@@ -4,6 +4,6 @@
 
 Gatekeeper enables the flexible definition of admission policies, enforcing security admission reviews at the cluster level to ensure stability and regulatory compliance of Kubernetes clusters.
 
-### New Features
+### Features
 
 - Support for configuring security admission policies at the cluster level
