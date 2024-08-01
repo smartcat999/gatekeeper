@@ -1,3 +1,9 @@
+## v1.0.2
+
+### Enhancements
+
+- Adapt for KSE v4.1.2
+
 ## v1.0.0
 
 [Gatekeeper](https://github.com/open-policy-agent/gatekeeper) is an admission controller for Kubernetes that allows flexible configuration of policies, using [Open Policy Agent (OPA)](https://www.openpolicyagent.org/) to validate requests to create and update resources on a Kubernetes cluster.
