@@ -1,8 +1,8 @@
-## v1.0.2
+## v1.0.1
 
 ### Enhancements
 
-- Adapt for KSE v4.1.2
+- Adapt for KubeSphere v4.1.1
 
 ## v1.0.0
 
