@@ -30,7 +30,7 @@ jobs:
       - run: |
           git config --global user.email "ci-bot@kubesphere.io"
           git config --global user.name "ks-ci-bot"
-          git clone git@github.com:smartcat999/ks-extensions.git
+          git clone git@github.com:kubesphere-extensions/ks-extensions.git
           rm -rf ks-extensions/gatekeeper
           OUTPUT=ks-extensions/gatekeeper make package
           cd ks-extensions/
