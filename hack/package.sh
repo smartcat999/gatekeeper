@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-EXT=${EXT:-gatekeeper}
-INPUT=${INPUT:-charts/$EXT}
-OUTPUT=${OUTPUT:-./tmp/$EXT}
+
+INPUT=${INPUT:-charts/gatekeeper}
+OUTPUT=${OUTPUT:-./tmp/gatekeeper}
 
 if [ ! -d "$OUTPUT" ]; then
   mkdir -p "$OUTPUT"
