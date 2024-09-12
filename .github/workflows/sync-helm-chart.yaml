@@ -41,7 +41,7 @@ jobs:
       - env:
           GH_TOKEN: ${{ secrets.CIBOT_ACCESS_TOKEN }}
         run: |
-          cd helm-charts/
+          cd ks-extensions/
           if [[ $(gh pr ls -H sync/ks-core/${GITHUB_REF#refs/*/} -B master) == "" ]]; then
             gh pr create -H sync/ks-core/${GITHUB_REF#refs/*/} -B master --title "Update gatekeeper helm chart from ${GITHUB_REF#refs/*/}" --body "Update gatekeeper helm chart"
           fi
