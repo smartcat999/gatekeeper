@@ -1,0 +1,47 @@
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'charts/gatekeeper/**'
+    branches:
+      - 'master'
+    tags:
+      - 'v*'
+
+jobs:
+  sync-chart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup SSH
+        uses: MrSquaare/ssh-setup-action@v2
+        with:
+          host: github.com
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Install Helm
+        uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # v3.5
+        with:
+          version: v3.13.0
+
+      - run: |
+          git config --global user.email "ci-bot@kubesphere.io"
+          git config --global user.name "ks-ci-bot"
+          git clone git@github.com:smartcat999/ks-extensions.git
+          rm -rf ks-extensions/gatekeeper
+          OUTPUT=ks-extensions/gatekeeper make package
+          cd ks-extensions/
+          git add .
+          git commit -m "update ks-core helm chart"
+          git push origin master:sync/ks-core/${GITHUB_REF#refs/*/} --force
+
+      - env:
+          GH_TOKEN: ${{ secrets.CIBOT_ACCESS_TOKEN }}
+        run: |
+          cd helm-charts/
+          if [[ $(gh pr ls -H sync/ks-core/${GITHUB_REF#refs/*/} -B master) == "" ]]; then
+            gh pr create -H sync/ks-core/${GITHUB_REF#refs/*/} -B master --title "Update gatekeeper helm chart from ${GITHUB_REF#refs/*/}" --body "Update gatekeeper helm chart"
+          fi
