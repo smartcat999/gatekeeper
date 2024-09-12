@@ -35,7 +35,7 @@ jobs:
           OUTPUT=ks-extensions/gatekeeper make package
           cd ks-extensions/
           git add .
-          git commit -m "update ks-core helm chart"
+          git commit -m "update gatekeeper helm chart"
           git push origin master:sync/ks-core/${GITHUB_REF#refs/*/} --force
 
       - env:
